@@ -42,49 +42,50 @@
     </div>
 
     <article class="scene" data-scene="0">
-      <h2>STEP 1: Loading Polygons</h2>
+      <h2>The PNW</h2>
+      <p> The pacific northwest consists of Washington, Oregon, and some of Idaho, however 
+        we will just be focusing on Washington and Oregon. 
+      </p>
+      <p> Highlighted in blue is the area which BLM (Bureau of Land Management) recognizes as OHV (off highway vehicle) friendly and accessible.
+        These are usually commonly known riding areas that host many riders each year.
+      </p>
+      <p> This highlighted area is not inclusive to private riding areas, tracks, or areas unknown to BLM.</p>
     </article>
     <article class="scene" data-scene="1">
-      <h2>STEP 2: Loading Points</h2>
+      <h2>Trail and Large Areas</h2>
+      <p> Now the highlighted area represents trails recognized and catalogued by BLM. </p>
+      <p> This is a more accurate representation of the ridable area in the PNW.</p>
     </article>
     <article class="scene" data-scene="2">
-      <h2>STEP 3: Relocate to Place A (Seattle)</h2>
+      <h2>Lots to Choose From</h2>
+      <p> As we can see, there are lots of trails in the area. Oregon and Washingon are host to a bounty of complex
+        trail systems and riding areas, from tight wooded trails, to open sand dunes.
+      </p>
     </article>
+
+    
     <article class="scene" data-scene="3">
-      <h2>STEP 4: Relocate to Place B (Portland)</h2>
+      <h2>Travel</h2>
+      <p> One need not travel far to gain access to offroad area. For someone seeking diversity in their offroad adventures,
+        it does not get much better than the PNW.
+      </p>
+ 
     </article>
     <article class="scene" data-scene="4">
-      <h2>STEP 5: Text Script</h2>
-      <p>This section shows where active research is happening, and on what topics to communicate on-going nature of
-        scientific learning. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        Aenean massa.
-        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-        ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla
-        vel, aliquet nec,
-        vulputate eget, arcu. In enim justo, rhoncus ut, imperdet a, venenatis vitae, justo. Nullam dictum felis eu pede
-        mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate.
-      </p>
-      <hr>
-      <div>
-        <!-- loading bootstrap icons -->
-        <p><i class="bi bi-person"></i> <span>2,823</span>
-        </p>
-        <p><i class="bi bi-map"></i> <span>3,520</span>
-        </p>
-      </div>
+      <h2>Dunefest </h2>
+      <p> One of my personal favorite riding areas, the Winchester Bay sand dunes, host a yearly event called 
+        Dunefest, where riders come from accross the country for a chance to compete in drag racing, hill climbs,
+        and other events. </p>
+      <img src="img/dunes.jpg"></img>
     </article>
-    <article class="scene" data-scene="5">
-      <h2>STEP 6: Image </h2>
-      <img src="img/portland.jpg"></img>
-    </article>
-    <article class="scene fullscreen" data-scene="6">
-      <h2>STEP 7: Ending Page</h2>
+    <article class="scene fullscreen" data-scene="5">
+    <h2> There's plenty to explore, so get out there!</h2>
     </article>
 
   </section>
 
   <section id="footer">
-    <h2>FOOTER</h2>
+    <h2>Go do some riding!</h2>
   </section>
 
 
@@ -128,8 +129,8 @@
    
     map = new mapboxgl.Map({
       container: 'map', // container ID
-      style: 'mapbox://styles/mapbox/light-v10',
-      zoom: 7, // starting zoom
+      style: 'mapbox://styles/mapbox/satellite-streets-v10',
+      zoom: 6.5, // starting zoom
       minZoom: 3,
       maxZoom: 10,
       center: [-121.93, 47.33], // starting center
@@ -173,20 +174,19 @@
           'source': 'counties-src',
           'minzoom': 5,
           'paint': {
-            'fill-color': '#0080ff',
-            'fill-opacity': 0.5
+            'fill-color': '#3bb2d0',
+            'fill-opacity': 0.6
           }
         };
 
         cellTowersLayer = {
           'id': 'celltowers-points',
-          'type': 'circle',
+          'type': 'fill',
           'source': 'celltowers-src',
           'minzoom': 5,
           'paint': {
-            'circle-color': 'red',
-            'circle-radius': 4,
-            'circle-opacity': 0.8,
+            'fill-color': '#3bb2d0',
+            'fill-opacity': 0.6
           }
         };
 
@@ -209,7 +209,7 @@
 
             map.flyTo({
               center: [-121.93, 47.33],
-              zoom: 8,
+              zoom: 6.5,
               pitch: 0,
               speed: 0.5
             }); // fly to a new location
@@ -260,19 +260,23 @@
               speed: 0.5
 
             });
+            if (typeof (map.getSource('celltowers-src')) == 'undefined') {
+              map.addSource('celltowers-src', {
+                type: 'geojson',
+                data: celltowers
+              });
+            } else {
+              map.getSource('celltowers-src').setData(celltowers);
 
-          } else if (index === 3) {
-            //Relocate to Portland
-            map.flyTo({
-              center: [-122.724366, 45.5428119],
-              zoom: 12,
-              pitch: 60,
-              speed: 0.5
+            }
 
-            });
+            if (!map.getLayer("celltowers-points")) {
+              map.addLayer(cellTowersLayer);
+            }
 
-            map.setStyle('mapbox://styles/mapbox/satellite-streets-v10'); // change the base map
-          } else if (index === 6) {
+
+
+          } else if (index === 5) {
 
             map.flyTo({
               center: [-122.4121036, 47.6131229],
@@ -281,6 +285,19 @@
               speed: 0.5
 
             });
+            if (typeof (map.getSource('celltowers-src')) == 'undefined') {
+              map.addSource('celltowers-src', {
+                type: 'geojson',
+                data: celltowers
+              });
+            } else {
+              map.getSource('celltowers-src').setData(celltowers);
+
+            }
+
+            if (!map.getLayer("celltowers-points")) {
+              map.addLayer(cellTowersLayer);
+            }
 
 
           }
@@ -301,11 +318,11 @@
             }
           } else if (index === 1) {
             if (map.getLayer("celltowers-points")) {
-              map.removeLayer('celltowers-points');
+            
             }
           } else if (index === 3) {
             //exit to Portland
-            map.setStyle('mapbox://styles/mapbox/light-v10');
+            map.setStyle('mapbox://styles/satellite-streets-v10');
           } 
         }
 
