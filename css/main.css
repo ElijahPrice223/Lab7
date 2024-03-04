@@ -125,22 +125,22 @@ p {
 .scene p {
   padding-left: 1rem;
   padding-right: 1rem;
-  color: black;
-  text-shadow: 0 0 6px white;
+  color: #fff;
+  text-shadow: 0 0 6px rgb(3, 3, 3);
 }
 
-[data-scene="4"] div {
+[data-scene="3"] div {
   font-size: xxx-large;
 }
 
-[data-scene="5"] img {
+[data-scene="4"] img {
   display: block;
   margin: 2rem auto 0 auto;
   width: 90%;
   border: 5px solid white;
 }
 
-[data-scene="6"] {
+[data-scene="5"] {
   background: url("../img/DirtbikeOut.jpg") no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
